@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Managment</title>
+
+    <style>
+        :root {
+  /* ===== COLORS ===== */
+  --bg-main: #0b0f14;
+  --bg-card: #121821;
+  --bg-input: #0f1520;
+
+  --color-text: #e6e8eb;
+  --color-muted: #9aa4b2;
+
+  --color-profit: #00c076;
+  --color-risk: #ff4d4f;
+  --color-accent: #2f80ed;
+
+  --border-soft: rgba(255, 255, 255, 0.08);
+
+  /* ===== TYPOGRAPHY ===== */
+  --font-main: "Inter", system-ui, sans-serif;
+  --font-size-base: 14px;
+  --font-size-title: 18px;
+
+  /* ===== LAYOUT ===== */
+  --radius: 12px;
+  --gap: 14px;
+  --transition: 0.25s ease;
+}
+
+/* ===== GLOBAL ===== */
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(145deg, #0b0f14, #0e141d);
+  font-family: var(--font-main);
+  color: var(--color-text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  align-items: stretch; /* کلیدی */
+}
+
+.size,
+.risk {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 24px;
+  width: 340px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--border-soft);
+}
+
+.size {
+  margin-right: 24px;
+}
+
+.title {
+  font-size: var(--font-size-title);
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.size .title {
+  color: var(--color-accent);
+}
+
+.risk .title {
+  color: var(--color-risk);
+}
+
+/* ===== FORM ===== */
+form {
+  display: grid;
+  gap: var(--gap);
+}
+
+label {
+  font-size: 12px;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+input[type="number"],
+input[type="text"] {
+  background: var(--bg-input);
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  padding: 12px 14px;
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  outline: none;
+  transition: var(--transition);
+}
+
+input::placeholder {
+  color: var(--color-muted);
+}
+
+input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(47, 128, 237, 0.2);
+}
+
+/* ===== BUTTON ===== */
+input[type="button"] {
+  margin-top: 10px;
+  background: linear-gradient(135deg, var(--color-accent), #1f6ae1);
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.risk input[type="button"] {
+  background: linear-gradient(135deg, var(--color-risk), #e13b3d);
+}
+
+input[type="button"]:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+input[type="button"]:active {
+  transform: translateY(0);
+}
+
+/* ===== RESULT ===== */
+.result {
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: 0.3s ease;
+}
+
+.result.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+#sizeResult,
+#riskResult {
+  margin-top: 18px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+
+#sizeResult {
+  color: var(--color-profit);
+}
+
+#riskResult {
+  color: var(--color-risk);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+    padding: 24px;
+  }
+
+  .size {
+    margin-right: 0;
+    margin-bottom: 24px;
+  }
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="container ">
+
+        <div class="size">
+
+            <p class="title">Position Size</p>
+
+            <form>
+                <label >Risk Amount</label>
+                <input id="risk" type="number" placeholder="USD" min="0" required>
+                <label >Stop Loss</label>
+                <input id="stop" type="number" placeholder="pip" min="0" required>
+                <label >Pip Value</label>
+                <input id="Value" type="number" placeholder="default 10$" min="0" required>
+                <input type="button" onclick="positionSize()" value="Calculate">
+            </form>
+
+            <P id="sizeResult" class="result"></P>
+
+        </div>
+
+        <div class="risk">
+
+            <p class="title">Risk Percent</p>
+
+            <form >
+                <label >Margin</label>
+                <input id="margin" type="number" placeholder="USD" min="0" required>
+                <label >Risk Percent</label>
+                <input id="percent" type="number" placeholder="1%" min="0" required>
+                <input type="button" onclick="riskManagment()" value="Calculate">
+            </form>
+
+            <P id="riskResult" class="result"></P>
+
+        </div>
+
+    </div>
+
+
+    
+</body>
+
+<script>
+    
+    let risk= document.getElementById("risk")
+    let stop = document.getElementById("stop")
+    let value = document.getElementById("Value")
+
+function positionSize () {
+
+    let size = Number(risk.value) / 
+               (Number(stop.value) * Number(value.value))
+
+    let res = document.getElementById("sizeResult")
+    res.innerText = "The Position Size =" + " " + (size)
+    res.classList.add("show")
+
+
+}
+
+    let margin = document.getElementById("margin")
+    let percent= document.getElementById("percent")
+
+function riskManagment () {
+
+    let risk = Number(margin.value) * (Number(percent.value) / 100)
+             
+
+    let res = document.getElementById("riskResult")
+    res.innerText = "The Risk Amount =" + " " + (risk) + "$"
+    res.classList.add("show")
+
+}
+
+
+
+</script>
+</html>
