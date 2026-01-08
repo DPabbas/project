@@ -33,6 +33,7 @@ body {
 .container {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 24px;
   margin: 0px 150px;
   align-items: stretch; 
@@ -153,7 +154,11 @@ input[type="button"]:hover { filter: brightness(1.05); }
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-  .container { flex-direction: column; }
+
+  .container { flex-direction: column; padding: 20px; margin: 0px 0px; align-items: center;} 
+
+  .size,.risk { width: 80%;  }
+
 }
 
 
