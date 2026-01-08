@@ -8,11 +8,16 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0b0f14">
+
+
+
 </head>
 
 <body>
 
-  <H1>Calculator Trade Assistan</H1>
+  <H1>Calculator Trade Assistance</H1>
 
     <div class="container ">
 
@@ -51,6 +56,14 @@
         </div>
 
     </div>
+
+    <script>
+        if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("service-worker.js")
+        .then(() => console.log("Service Worker Registered"));
+        }
+    </script>
+
     
 </body>
 
