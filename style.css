@@ -153,7 +153,7 @@ input[type="button"]:hover { filter: brightness(1.05); }
 #riskResult { color: var(--color-risk); }
 
 /* RESPONSIVE */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
 
   .container { flex-direction: column; padding: 20px; margin: 0px 0px; align-items: center;} 
 
